@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Draggable } from "gsap/all";
+import { Draggable } from "gsap/Draggable";
 import { SNAP, GRID_SIZE } from "../../constants";
 
 const Init = () => {
@@ -11,7 +11,7 @@ const Init = () => {
       type: "x,y",
       liveSnap: SNAP,
       dragClickables: false,
-      zIndexBoost: false
+      zIndexBoost: false,
     });
     return () => {
       dragInstance.current[0].kill();
@@ -35,7 +35,7 @@ const Init = () => {
           boxSizing: "border-box",
           lineHeight: "32px",
           overflow: "hidden",
-          textAlign: "center"
+          textAlign: "center",
         }}
       >
         init

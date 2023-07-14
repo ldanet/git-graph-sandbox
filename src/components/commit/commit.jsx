@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
-import { Draggable } from "gsap/all";
+import { Draggable } from "gsap/Draggable";
 import hash from "object-hash";
 import { SNAP, GRID_SIZE } from "../../constants";
 import Head from "../head/head";
@@ -9,20 +9,20 @@ const Commit = ({
   handleHeadDrop,
   commitId,
   isRemote,
-  isHead
+  isHead,
 }) => {
   const dragInstance = useRef();
   const dragTarget = useRef();
   const shortID = useRef(hash(commitId).substring(0, 3));
   const [showID, setShowID] = useState(false);
 
-  const handleDragOver = useCallback(e => {
+  const handleDragOver = useCallback((e) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
   }, []);
 
   const handleDrop = useCallback(
-    e => {
+    (e) => {
       e.preventDefault();
       handleHeadDrop("commit", commitId);
     },
@@ -36,15 +36,15 @@ const Commit = ({
   useEffect(() => {
     dragInstance.current = Draggable.create(dragTarget.current, {
       type: "x,y",
-      onClick: function() {
+      onClick: function () {
         toggleID();
       },
-      onDragEnd: function() {
+      onDragEnd: function () {
         handleDragEnd();
       },
       liveSnap: SNAP,
       dragClickables: false,
-      zIndexBoost: false
+      zIndexBoost: false,
     });
     return () => {
       dragInstance.current[0].kill();
@@ -75,7 +75,7 @@ const Commit = ({
           boxSizing: "border-box",
           lineHeight: "32px",
           overflow: "hidden",
-          textAlign: "center"
+          textAlign: "center",
         }}
       >
         {showID && shortID.current}

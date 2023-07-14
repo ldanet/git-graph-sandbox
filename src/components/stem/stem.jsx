@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
-import { Draggable } from "gsap/all";
+import { Draggable } from "gsap/Draggable";
 import { GRID_SIZE, SNAP } from "../../constants";
 
 const VARIANTS = [
   `M0,0 L0,${GRID_SIZE}`,
   `M0,0L${GRID_SIZE},${GRID_SIZE}`,
-  `M${GRID_SIZE},0L0,${GRID_SIZE}`
+  `M${GRID_SIZE},0L0,${GRID_SIZE}`,
 ];
 
 const Stem = ({ handleDragEnd }) => {
@@ -20,15 +20,15 @@ const Stem = ({ handleDragEnd }) => {
   useEffect(() => {
     dragInstance.current = Draggable.create(dragTarget.current, {
       type: "x,y",
-      onClick: function() {
+      onClick: function () {
         rotate();
       },
-      onDragEnd: function() {
+      onDragEnd: function () {
         handleDragEnd();
       },
       liveSnap: SNAP,
       dragClickables: true,
-      zIndexBoost: false
+      zIndexBoost: false,
     });
     return () => {
       dragInstance.current[0].kill();

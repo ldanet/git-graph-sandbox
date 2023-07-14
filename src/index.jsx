@@ -1,11 +1,13 @@
 import React, { useState, useCallback, useRef, Fragment } from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import "./styles.css";
 import Commit from "./components/commit/commit";
 import Stem from "./components/stem/stem";
 import Branch from "./components/branch/branch";
 import Init from "./components/init/init";
+import { gsap } from "gsap";
+import { Draggable } from "gsap/Draggable";
 
 const App = () => {
   const inputRef = useRef();
@@ -58,8 +60,8 @@ const App = () => {
       {
         id: branches.length,
         name: inputRef.current.value,
-        hue: branches.length * 222 - 10
-      }
+        hue: branches.length * 222 - 10,
+      },
     ]);
   }, [branches, setBranches]);
   const handleAddRemoteBranch = useCallback(() => {
@@ -68,8 +70,8 @@ const App = () => {
       {
         id: remoteBranches.length,
         name: inputRef.current.value,
-        hue: remoteBranches.length * 222 - 10
-      }
+        hue: remoteBranches.length * 222 - 10,
+      },
     ]);
   }, [remoteBranches, setRemoteBranches]);
   const handleAddOriginBranch = useCallback(() => {
@@ -78,8 +80,8 @@ const App = () => {
       {
         id: originBranches.length,
         name: inputRef.current.value,
-        hue: originBranches.length * 222 - 10
-      }
+        hue: originBranches.length * 222 - 10,
+      },
     ]);
   }, [originBranches, setOriginBranches]);
 
@@ -180,4 +182,7 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById("root"));
+gsap.registerPlugin(Draggable);
+
+const root = createRoot(document.getElementById("root"));
+root.render(<App />);

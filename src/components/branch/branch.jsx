@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
-import { Draggable } from "gsap/all";
+import { Draggable } from "gsap/Draggable";
 import { SNAP, GRID_SIZE } from "../../constants";
 import Head from "../head/head";
 
@@ -10,7 +10,7 @@ const Branch = ({
   isDrop,
   branchId,
   isHead,
-  handleHeadDrop
+  handleHeadDrop,
 }) => {
   const dragInstance = useRef();
   const dragTarget = useRef();
@@ -43,7 +43,7 @@ const Branch = ({
       },
       liveSnap: SNAP,
       dragClickables: false,
-      zIndexBoost: false
+      zIndexBoost: false,
     });
     return () => {
       dragInstance.current[0].kill();
@@ -57,7 +57,7 @@ const Branch = ({
       style={{
         left: 53 + GRID_SIZE, // 55 - 2
         top: `${GRID_SIZE - 100}px`,
-        opacity: isRemote ? 0.5 : 1
+        opacity: isRemote ? 0.5 : 1,
       }}
       ref={dragTarget}
       onDragOver={isDrop ? handleDragOver : undefined}
@@ -66,7 +66,7 @@ const Branch = ({
       <div
         style={{
           transformOrigin: "bottom center",
-          transform: `rotate(${angle}deg)`
+          transform: `rotate(${angle}deg)`,
         }}
       >
         <svg viewBox={`-2 0 54 100`} width={54} height={100}>
