@@ -25,15 +25,16 @@ const Init = () => {
         // className="commit__body"
         style={{
           position: "absolute",
-          height: 40,
-          width: 80,
-          borderRadius: 80,
-          border: `4px dashed hsl(39, 0%, 80%)`,
+          height: GRID_SIZE / 2,
+          width: GRID_SIZE,
+          borderRadius: GRID_SIZE,
+          border: `${GRID_SIZE * 0.05}px dashed hsl(39, 0%, 80%)`,
           backgroundColor: `white`,
-          top: -20 + GRID_SIZE * 2,
-          left: -40,
+          top: -GRID_SIZE / 4 + GRID_SIZE * 2,
+          left: -GRID_SIZE / 2,
           boxSizing: "border-box",
-          lineHeight: "32px",
+          lineHeight: `${GRID_SIZE * 0.4}px`,
+          fontSize: `${GRID_SIZE / 5}px`,
           overflow: "hidden",
           textAlign: "center",
         }}

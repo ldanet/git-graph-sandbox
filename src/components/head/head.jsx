@@ -1,4 +1,8 @@
 import React from "react";
+import { GRID_SIZE } from "../../constants";
+
+export const HEAD_SIZE = GRID_SIZE * 0.375;
+
 const Head = ({ isDetached, ...props }) => {
   return (
     <img
@@ -10,8 +14,8 @@ const Head = ({ isDetached, ...props }) => {
           : "https://upload.wikimedia.org/wikipedia/commons/a/a7/Emblem-fun.svg"
       }
       alt=""
-      width={30}
-      height={30}
+      width={HEAD_SIZE}
+      height={HEAD_SIZE}
       {...props}
     />
   );

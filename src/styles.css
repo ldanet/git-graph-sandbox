@@ -35,6 +35,7 @@ svg {
   pointer-events: none;
 }
 
-path {
+path,
+rect {
   pointer-events: all;
 }

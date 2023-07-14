@@ -2,7 +2,10 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Draggable } from "gsap/Draggable";
 import hash from "object-hash";
 import { SNAP, GRID_SIZE } from "../../constants";
-import Head from "../head/head";
+import Head, { HEAD_SIZE } from "../head/head";
+
+const BORDER = GRID_SIZE / 20;
+export const DIAMETER = GRID_SIZE / 2;
 
 const Commit = ({
   handleDragEnd,
@@ -65,15 +68,16 @@ const Commit = ({
         // className="commit__body"
         style={{
           position: "absolute",
-          height: 40,
-          width: 40,
-          borderRadius: 20,
-          border: `4px solid hsl(39, ${saturation}%, 80%)`,
+          height: DIAMETER,
+          width: DIAMETER,
+          borderRadius: DIAMETER / 2,
+          border: `${BORDER}px solid hsl(39, ${saturation}%, 80%)`,
           backgroundColor: `hsl(39,  ${saturation}%, 69%)`,
-          top: -20,
-          left: -20 + (isRemote ? GRID_SIZE : 0),
+          top: -DIAMETER / 2,
+          left: -DIAMETER / 2 + (isRemote ? GRID_SIZE : 0),
           boxSizing: "border-box",
-          lineHeight: "32px",
+          fontSize: `${GRID_SIZE / 5}px`,
+          lineHeight: `${GRID_SIZE / 2.5}px`,
           overflow: "hidden",
           textAlign: "center",
         }}
@@ -85,7 +89,7 @@ const Commit = ({
           isDetached
           className="absolute"
           data-clickable="true"
-          style={{ top: -20, left: 12 }}
+          style={{ top: -HEAD_SIZE, left: (DIAMETER - HEAD_SIZE) / 2 }}
         />
       )}
     </div>

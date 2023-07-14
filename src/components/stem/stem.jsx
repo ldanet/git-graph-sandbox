@@ -8,6 +8,8 @@ const VARIANTS = [
   `M${GRID_SIZE},0L0,${GRID_SIZE}`,
 ];
 
+const STEM_THICKNESS = GRID_SIZE * 0.05;
+
 const Stem = ({ handleDragEnd }) => {
   const dragInstance = useRef();
   const dragTarget = useRef();
@@ -38,10 +40,10 @@ const Stem = ({ handleDragEnd }) => {
 
   return (
     <svg
-      style={{ left: "-2px" }}
+      style={{ left: `-${STEM_THICKNESS / 2}px` }}
       className="absolute"
       ref={dragTarget}
-      viewBox={`-2 0 ${GRID_SIZE} ${GRID_SIZE}`}
+      viewBox={`-${STEM_THICKNESS / 2} 0 ${GRID_SIZE} ${GRID_SIZE}`}
       width={GRID_SIZE}
       height={GRID_SIZE}
     >
@@ -50,7 +52,7 @@ const Stem = ({ handleDragEnd }) => {
         opacity="1"
         fillOpacity="0"
         stroke="#000000"
-        strokeWidth="4"
+        strokeWidth={STEM_THICKNESS}
         strokeOpacity="1"
       />
     </svg>

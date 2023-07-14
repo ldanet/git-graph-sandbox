@@ -1,7 +1,10 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Draggable } from "gsap/Draggable";
 import { SNAP, GRID_SIZE } from "../../constants";
-import Head from "../head/head";
+import Head, { HEAD_SIZE } from "../head/head";
+
+const WIDTH = GRID_SIZE * 0.625; // 54px for a 80px grid size
+const HEIGHT = GRID_SIZE * 1.25; // 100px for a 80px grid size
 
 const Branch = ({
   name,
@@ -55,9 +58,13 @@ const Branch = ({
     <div
       className="absolute pointer-none"
       style={{
-        left: 53 + GRID_SIZE, // 55 - 2
-        top: `${GRID_SIZE - 100}px`,
+        // -WIDTH / 2 : offsetting the branch so it's centered on the grid
+        // GRID_SIZE * 2 : offsetting so it sits after commits in the toolbox
+        left: -WIDTH / 2 + GRID_SIZE * 2,
+        top: `${GRID_SIZE - HEIGHT}px`,
         opacity: isRemote ? 0.5 : 1,
+        height: `${HEIGHT}px`,
+        width: `${WIDTH}px`,
       }}
       ref={dragTarget}
       onDragOver={isDrop ? handleDragOver : undefined}
@@ -65,73 +72,67 @@ const Branch = ({
     >
       <div
         style={{
+          height: `${HEIGHT}px`,
           transformOrigin: "bottom center",
           transform: `rotate(${angle}deg)`,
         }}
       >
-        <svg viewBox={`-2 0 54 100`} width={54} height={100}>
+        <svg viewBox="0 0 50 100" width={WIDTH} height={HEIGHT}>
           <defs>
-            <path d="M25 100L25 0" id="b2te7nLyEm" />
-            <path
-              d="M45.35 10C47.92 10 50 12.08 50 14.65C50 20.72 50 34.28 50 40.35C50 42.92 47.92 45 45.35 45C36.28 45 13.72 45 4.65 45C2.08 45 0 42.92 0 40.35C0 34.28 0 20.72 0 14.65C0 12.08 2.08 10 4.65 10C13.72 10 36.28 10 45.35 10Z"
-              id="b1RpRAOnUA"
+            <path d="M25, 0 V 100" id="b2te7nLyEm" />
+            <rect
+              id="rect1"
+              ry="5"
+              rx="5"
+              y="10"
+              x="1.5"
+              height="35"
+              width="47"
             />
           </defs>
           <g>
-            <g>
-              <g>
-                <g>
-                  <use
-                    xlinkHref="#b2te7nLyEm"
-                    opacity="1"
-                    fillOpacity="0"
-                    stroke={`hsl(${hue}, 50%, 50%)`}
-                    strokeOpacity="1"
-                    strokeWidth="3"
-                  />
-                </g>
-              </g>
-              <g>
-                <use
-                  xlinkHref="#b1RpRAOnUA"
-                  opacity="1"
-                  fill={`hsl(${hue}, 80%, 80%)`}
-                  fillOpacity="1"
-                />
-                <g>
-                  <use
-                    xlinkHref="#b1RpRAOnUA"
-                    stroke={`hsl(${hue}, 80%, 50%)`}
-                    opacity="1"
-                    fillOpacity="0"
-                    strokeOpacity="1"
-                    strokeWidth="3"
-                  />
-                </g>
-              </g>
-              <g id="g1zjG7nLtD">
-                <text
-                  id="agidSfaf9"
-                  x="0"
-                  y="0"
-                  opacity="1"
-                  fill="#000"
-                  fillOpacity="1"
-                  fontSize="12"
-                >
-                  <tspan textAnchor="middle" x="25" dy="32">
-                    {name}
-                  </tspan>
-                </text>
-              </g>
-            </g>
+            <use
+              xlinkHref="#b2te7nLyEm"
+              opacity="1"
+              fillOpacity="0"
+              stroke={`hsl(${hue}, 50%, 50%)`}
+              strokeOpacity="1"
+              strokeWidth="3"
+            />
+            <use
+              xlinkHref="#rect1"
+              opacity="1"
+              fill={`hsl(${hue}, 80%, 80%)`}
+              fillOpacity="1"
+            />
+            <use
+              xlinkHref="#rect1"
+              stroke={`hsl(${hue}, 80%, 50%)`}
+              opacity="1"
+              fillOpacity="0"
+              strokeOpacity="1"
+              strokeWidth="3"
+            />
+            <text
+              id="agidSfaf9"
+              x="0"
+              y="0"
+              opacity="1"
+              fill="#000"
+              fillOpacity="1"
+              fontSize="12"
+            >
+              <tspan textAnchor="middle" x="25" dy="32">
+                {name}
+              </tspan>
+            </text>
           </g>
         </svg>
         {isHead && (
           <Head
             className="absolute pointer-auto"
             data-clickable="true"
-            style={{ top: -20, left: 12 }}
+            style={{ top: -HEAD_SIZE * 0.6, left: (WIDTH - HEAD_SIZE) / 2 }}
           />
         )}
       </div>
