@@ -1,11 +1,31 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback, DragEvent } from "react";
 import { Draggable } from "gsap/Draggable";
 import hash from "object-hash";
 import { SNAP, GRID_SIZE, HEX_SIZE } from "../../constants";
 import Head, { HEAD_SIZE } from "../head/head";
+import { HeadLocationType } from "../../types";
 
 const BORDER = GRID_SIZE / 20;
 export const DIAMETER = GRID_SIZE / 2;
+
+type BaseProps = {
+  handleDragEnd: () => void;
+  commitId: number;
+  isRemote?: boolean;
+  isHead?: boolean;
+};
+
+type LocalProps = BaseProps & {
+  isRemote?: false;
+  handleHeadDrop: (type: HeadLocationType, id: number) => void;
+};
+
+type RemoteProps = BaseProps & {
+  handleHeadDrop?: undefined;
+  isRemote: true;
+};
+
+type Props = LocalProps | RemoteProps;
 
 const Commit = ({
   handleDragEnd,
@@ -13,21 +33,23 @@ const Commit = ({
   commitId,
   isRemote,
   isHead,
-}) => {
-  const dragInstance = useRef();
-  const dragTarget = useRef();
+}: Props) => {
+  const dragInstance = useRef<Draggable[]>();
+  const dragTarget = useRef<HTMLDivElement>(null);
   const shortID = useRef(hash(commitId).substring(0, 3));
   const [showID, setShowID] = useState(false);
 
-  const handleDragOver = useCallback((e) => {
+  const handleDragOver = useCallback((e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
   }, []);
 
   const handleDrop = useCallback(
-    (e) => {
+    (e: DragEvent<HTMLDivElement>) => {
       e.preventDefault();
-      handleHeadDrop("commit", commitId);
+      if (!isRemote) {
+        handleHeadDrop("commit", commitId);
+      }
     },
     [commitId, handleHeadDrop]
   );
@@ -47,7 +69,7 @@ const Commit = ({
       zIndexBoost: false,
     });
     return () => {
-      dragInstance.current[0].kill();
+      dragInstance.current![0].kill();
       dragInstance.current = undefined;
     };
   }, [toggleID, handleDragEnd]);

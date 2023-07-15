@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Draggable } from "gsap/Draggable";
 import { SNAP, GRID_SIZE } from "../../constants";
 
 const Init = () => {
-  const dragInstance = useRef();
-  const dragTarget = useRef();
+  const dragInstance = useRef<Draggable[]>();
+  const dragTarget = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dragInstance.current = Draggable.create(dragTarget.current, {
@@ -14,7 +14,7 @@ const Init = () => {
       zIndexBoost: false,
     });
     return () => {
-      dragInstance.current[0].kill();
+      dragInstance.current![0].kill();
       dragInstance.current = undefined;
     };
   }, []);

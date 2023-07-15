@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "A sandbox for a git repo model I made for a talk",
   "keywords": [],
-  "main": "src/index.js",
+  "main": "src/index.tsx",
   "scripts": {
-    "start": "vite"
+    "start": "vite",
+    "build": "tsc && vite build"
   },
   "dependencies": {
     "gsap": "3.12.2",
@@ -14,7 +15,11 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/object-hash": "^3.0.2",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
+    "typescript": "^5.1.6",
     "vite": "^4.4.4"
   }
 }

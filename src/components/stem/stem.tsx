@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { Draggable } from "gsap/Draggable";
 import { GRID_SIZE, SNAP } from "../../constants";
 
@@ -6,9 +6,13 @@ const ANGLES = [0, 60, 0, -60];
 
 const STEM_THICKNESS = GRID_SIZE * 0.05;
 
-const Stem = ({ handleDragEnd }) => {
-  const dragInstance = useRef();
-  const dragTarget = useRef();
+type Props = {
+  handleDragEnd: () => void;
+};
+
+const Stem = ({ handleDragEnd }: Props) => {
+  const dragInstance = useRef<Draggable[]>();
+  const dragTarget = useRef<HTMLDivElement>(null);
   const [variant, setVariant] = useState(0);
 
   const rotate = useCallback(() => {
@@ -26,7 +30,7 @@ const Stem = ({ handleDragEnd }) => {
       zIndexBoost: false,
     });
     return () => {
-      dragInstance.current[0].kill();
+      dragInstance.current![0].kill();
       dragInstance.current = undefined;
     };
   }, [rotate, handleDragEnd]);

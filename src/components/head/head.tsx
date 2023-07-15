@@ -1,9 +1,10 @@
-import React from "react";
 import { GRID_SIZE } from "../../constants";
 
 export const HEAD_SIZE = GRID_SIZE * 0.375;
 
-const Head = ({ isDetached, ...props }) => {
+type Props = JSX.IntrinsicElements["img"] & { isDetached?: boolean };
+
+const Head = ({ isDetached, ...props }: Props) => {
   return (
     <img
       draggable
