@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Draggable } from "gsap/Draggable";
 import hash from "object-hash";
-import { SNAP, GRID_SIZE } from "../../constants";
+import { SNAP, GRID_SIZE, HEX_SIZE } from "../../constants";
 import Head, { HEAD_SIZE } from "../head/head";
 
 const BORDER = GRID_SIZE / 20;
@@ -39,9 +39,6 @@ const Commit = ({
   useEffect(() => {
     dragInstance.current = Draggable.create(dragTarget.current, {
       type: "x,y",
-      onClick: function () {
-        toggleID();
-      },
       onDragEnd: function () {
         handleDragEnd();
       },
@@ -63,9 +60,9 @@ const Commit = ({
       className="absolute"
       onDragOver={!isRemote ? handleDragOver : undefined}
       onDrop={!isRemote ? handleDrop : undefined}
+      onClick={toggleID}
     >
       <div
-        // className="commit__body"
         style={{
           position: "absolute",
           height: DIAMETER,
@@ -73,8 +70,8 @@ const Commit = ({
           borderRadius: DIAMETER / 2,
           border: `${BORDER}px solid hsl(39, ${saturation}%, 80%)`,
           backgroundColor: `hsl(39,  ${saturation}%, 69%)`,
-          top: -DIAMETER / 2,
-          left: -DIAMETER / 2 + (isRemote ? GRID_SIZE : 0),
+          top: -DIAMETER / 2 + (isRemote ? 0.5 * GRID_SIZE : 0),
+          left: -DIAMETER / 2 + (isRemote ? 1.5 * HEX_SIZE : 0),
           boxSizing: "border-box",
           fontSize: `${GRID_SIZE / 5}px`,
           lineHeight: `${GRID_SIZE / 2.5}px`,

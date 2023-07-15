@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Draggable } from "gsap/Draggable";
-import { SNAP, GRID_SIZE } from "../../constants";
+import { SNAP, GRID_SIZE, HEX_SIZE } from "../../constants";
 import Head, { HEAD_SIZE } from "../head/head";
 
 const WIDTH = GRID_SIZE * 0.625; // 54px for a 80px grid size
@@ -59,8 +59,8 @@ const Branch = ({
       className="absolute pointer-none"
       style={{
         // -WIDTH / 2 : offsetting the branch so it's centered on the grid
-        // GRID_SIZE * 2 : offsetting so it sits after commits in the toolbox
-        left: -WIDTH / 2 + GRID_SIZE * 2,
+        // HEX_SIZE * 3 : offsetting so it sits after commits in the toolbox
+        left: -WIDTH / 2 + HEX_SIZE * 3,
         top: `${GRID_SIZE - HEIGHT}px`,
         opacity: isRemote ? 0.5 : 1,
         height: `${HEIGHT}px`,

@@ -2,11 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Draggable } from "gsap/Draggable";
 import { GRID_SIZE, SNAP } from "../../constants";
 
-const VARIANTS = [
-  `M0,0 L0,${GRID_SIZE}`,
-  `M0,0L${GRID_SIZE},${GRID_SIZE}`,
-  `M${GRID_SIZE},0L0,${GRID_SIZE}`,
-];
+const ANGLES = [0, 60, 0, -60];
 
 const STEM_THICKNESS = GRID_SIZE * 0.05;
 
@@ -16,15 +12,12 @@ const Stem = ({ handleDragEnd }) => {
   const [variant, setVariant] = useState(0);
 
   const rotate = useCallback(() => {
-    setVariant((variant + 1) % VARIANTS.length);
-  }, [variant, setVariant]);
+    setVariant((variant) => (variant + 1) % ANGLES.length);
+  }, []);
 
   useEffect(() => {
     dragInstance.current = Draggable.create(dragTarget.current, {
       type: "x,y",
-      onClick: function () {
-        rotate();
-      },
       onDragEnd: function () {
         handleDragEnd();
       },
@@ -39,23 +32,37 @@ const Stem = ({ handleDragEnd }) => {
   }, [rotate, handleDragEnd]);
 
   return (
-    <svg
-      style={{ left: `-${STEM_THICKNESS / 2}px` }}
+    <div
       className="absolute"
       ref={dragTarget}
-      viewBox={`-${STEM_THICKNESS / 2} 0 ${GRID_SIZE} ${GRID_SIZE}`}
-      width={GRID_SIZE}
-      height={GRID_SIZE}
+      style={{
+        left: `-${STEM_THICKNESS / 2}px`,
+      }}
+      onClick={rotate}
     >
-      <path
-        d={VARIANTS[variant]}
-        opacity="1"
-        fillOpacity="0"
-        stroke="#000000"
-        strokeWidth={STEM_THICKNESS}
-        strokeOpacity="1"
-      />
-    </svg>
+      <div
+        style={{
+          transformOrigin: "bottom left",
+          transform: `rotate(${ANGLES[variant]}deg)`,
+          height: `${GRID_SIZE}px`,
+        }}
+      >
+        <svg
+          viewBox={`-${STEM_THICKNESS / 2} 0 ${GRID_SIZE} ${GRID_SIZE}`}
+          width={GRID_SIZE}
+          height={GRID_SIZE}
+        >
+          <path
+            d={`M0,0 L0,${GRID_SIZE}`}
+            opacity="1"
+            fillOpacity="0"
+            stroke="#000000"
+            strokeWidth={STEM_THICKNESS}
+            strokeOpacity="1"
+          />
+        </svg>
+      </div>
+    </div>
   );
 };
 
