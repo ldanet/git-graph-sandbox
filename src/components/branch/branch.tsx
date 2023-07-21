@@ -10,7 +10,7 @@ const HEIGHT = GRID_SIZE * 1.25; // 100px for a 80px grid size
 type BaseProps = {
   name: string;
   hue: number;
-  isRemote?: boolean;
+  isTracking?: boolean;
   isHead?: boolean;
 };
 
@@ -31,7 +31,7 @@ type Props = DroppableProps | NonDroppableProps;
 const Branch = ({
   name,
   hue,
-  isRemote,
+  isTracking,
   isDrop,
   branchId,
   handleHeadDrop,
@@ -84,7 +84,7 @@ const Branch = ({
         // HEX_SIZE * 3 : offsetting so it sits after commits in the toolbox
         left: -WIDTH / 2 + HEX_SIZE * 3,
         top: `${GRID_SIZE - HEIGHT}px`,
-        opacity: isRemote ? 0.5 : 1,
+        opacity: isTracking ? 0.5 : 1,
         height: `${HEIGHT}px`,
         width: `${WIDTH}px`,
       }}

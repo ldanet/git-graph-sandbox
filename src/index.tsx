@@ -26,7 +26,7 @@ const App = () => {
     { id: 0, name: "main", hue: -10 },
   ]);
   const [remoteBranches, setRemoteBranches] = useState<BranchObj[]>([]);
-  const [originBranches, setOriginBranches] = useState<BranchObj[]>([]);
+  const [trackingBranches, setTrackingBranches] = useState<BranchObj[]>([]);
   const [headLocation, setHeadLocation] = useState<HeadLocation>({
     type: "branch",
     id: 0,
@@ -84,16 +84,16 @@ const App = () => {
       },
     ]);
   }, [remoteBranches, setRemoteBranches]);
-  const handleAddOriginBranch = useCallback(() => {
-    setOriginBranches([
-      ...originBranches,
+  const handleAddTrackingBranch = useCallback(() => {
+    setTrackingBranches([
+      ...trackingBranches,
       {
-        id: originBranches.length,
+        id: trackingBranches.length,
         name: inputRef.current!.value,
-        hue: originBranches.length * 222 - 10,
+        hue: trackingBranches.length * 222 - 10,
       },
     ]);
-  }, [originBranches, setOriginBranches]);
+  }, [trackingBranches, setTrackingBranches]);
 
   const hasRepo = !!inits.length;
   const hasRemote = inits.length > 1;
@@ -117,7 +117,9 @@ const App = () => {
           {hasRemote && (
             <Fragment>
               <button onClick={handleAddRemoteBranch}>Add remote branch</button>
-              <button onClick={handleAddOriginBranch}>Add origin branch</button>
+              <button onClick={handleAddTrackingBranch}>
+                Add tracking branch
+              </button>
             </Fragment>
           )}
           <div className="toolbox">
@@ -127,11 +129,12 @@ const App = () => {
                 handleDragEnd={handleAddStem.bind(null, stem.id)}
               />
             ))}
-            {originBranches.map((branch) => (
+            {trackingBranches.map((branch) => (
               <Branch
                 key={`br${branch.id}`}
                 name={branch.name}
                 hue={branch.hue}
+                isTracking
               />
             ))}
             {remoteBranches.map((branch) => (
@@ -139,7 +142,6 @@ const App = () => {
                 key={`br${branch.id}`}
                 name={branch.name}
                 hue={branch.hue}
-                isRemote
               />
             ))}
             {inits.length &&
